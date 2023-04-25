@@ -49,31 +49,51 @@ const task4 = async (req, res) => {
     return res.status(400).json({ status: "failure", error: error.message });
   }
 };
-const task5 = async (req, res) => {
-  try {
-    const users=await userModel.find({});
-    let cities={};
+
+
+// const task5 = async (req, res) => {
+//   try {
+//     const users=await userModel.find({});
+//     let cities={};
     
-    for(let i=0;i<users.length;i++){
-        let key=users[i].city;
-        if(cities[key]){
-            cities[key].user+=1;
-            cities[key].ti+=users[i].income;
-        }
-        else
-        {
-            cities[key] = {'user':1,'ti':users[i].income};
-        }
+//     for(let i=0;i<users.length;i++){
+//         let key=users[i].city;
+//         if(cities[key]){
+//             cities[key].user+=1;
+//             cities[key].ti+=users[i].income;
+//         }
+//         else
+//         {
+//             cities[key] = {'user':1,'ti':users[i].income};
+//         }
+//     }
+//     const result = []
+//     Object.keys(cities).forEach((key) => result.push({...cities[key],city:key,income:cities[key].ti/cities[key].user}));
+//     result.sort((a,b) => b.user-a.user)
+
+
+//     return res.status(200).json({ status: "Success", result: result.slice(0,10)});
+//   } catch (error) {
+//       console.log(error);
+//     return res.status(400).json({ status: "failure", error: error.message });
+//   }
+// };
+
+
+const task5 = async (req, res) => {
+    try {
+      const users=await userModel.aggregate([
+        { $group: { _id: "$city", total_users: { $sum: 1 } } },
+        { $sort: { total_users: -1 } },
+        { $limit: 10 },
+        { $project: { _id: 1, total_users: 1, average_income: { $divide: ["$total_income", "$total_users"] } } }
+      ])
+      return res.status(200).json({ status: "Success", result: users });
+    } catch (error) {
+        console.log(error);
+      return res.status(400).json({ status: "failure", error: error.message });
     }
-    const result = []
-    Object.keys(cities).forEach((key) => result.push({...cities[key],city:key,income:cities[key].ti/cities[key].user}));
-    result.sort((a,b) => b.user-a.user)
+  };
+  
 
-
-    return res.status(200).json({ status: "Success", result: result.slice(0,10)});
-  } catch (error) {
-      console.log(error);
-    return res.status(400).json({ status: "failure", error: error.message });
-  }
-};
 module.exports = { task1, task2, task3, task4, task5 };
