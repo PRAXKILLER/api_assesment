@@ -1,6 +1,7 @@
 import "./App.css";
 import { useState, useEffect } from "react";
 import Table from "./table";
+import Table2 from "./table2";
 
 function App() {
   const [data1, setData1] = useState([]);
@@ -63,7 +64,7 @@ function App() {
         <button onClick={() => setToggle4(!toggle4)}>Task 4</button>
         {toggle4 ? <Table arr={data4} /> : null}
         <button onClick={() => setToggle5(!toggle5)}>Task 5</button>
-        {toggle5 ? <Table arr={data5} /> : null}
+        {toggle5 ? <Table2 arr={data5} /> : null}
       </div>
     </>
   );

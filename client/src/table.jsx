@@ -7,10 +7,13 @@ const Table = ({ arr }) => {
             <th>ID</th>
             <th>First Name</th>
             <th>Last Name</th>
+            <th>Email</th>
             <th>Gender</th>
-            <th>Car</th>
             <th>Income</th>
+            <th>City</th>
+            <th>Car</th>
             <th>Quote</th>
+            <th>Phone Price</th>
           </tr>
         </thead>
 
@@ -20,11 +23,14 @@ const Table = ({ arr }) => {
               <td>{item.id}</td>
               <td>{item.first_name}</td>
               <td>{item.last_name}</td>
+              <td>{item.email}</td>
               <td>{item.gender}</td>
-              <td>{item.car}</td>
               <td>{item.income}</td>
+              <td>{item.city}</td>
+              <td>{item.car}</td>
               <td>{item.quote}</td>
-            </tr>
+              <td>{item.phone_price}</td>
+             </tr>
           ))}
         </tbody>
       </table>
