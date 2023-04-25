@@ -1,7 +1,9 @@
 import "./App.css";
 import { useState, useEffect } from "react";
-import Table from "./table";
-import Table2 from "./table2";
+import Button from "./components/button";
+import Table from "./components/Table";
+import logo from './assets/images/oruPhones logo.png'
+import Table2 from "./components/table2";
 
 function App() {
   const [data1, setData1] = useState([]);
@@ -9,11 +11,8 @@ function App() {
   const [data3, setData3] = useState([]);
   const [data4, setData4] = useState([]);
   const [data5, setData5] = useState([]);
-  const [toggle1, setToggle1] = useState(false);
-  const [toggle2, setToggle2] = useState(false);
-  const [toggle3, setToggle3] = useState(false);
-  const [toggle4, setToggle4] = useState(false);
-  const [toggle5, setToggle5] = useState(false);
+
+  const [data, setData] = useState([]);
 
   const handleTask1 = async () => {
     // const res = await fetch("http://localhost:8081/users/task3");
@@ -24,7 +23,6 @@ function App() {
     console.log(data3);
     console.log(data4);
     console.log(data5);
-    setToggle1(!toggle1);
   };
 
   useEffect(() => {
@@ -54,17 +52,19 @@ function App() {
 
   return (
     <>
-      <div>
-        <button onClick={() => setToggle1(!toggle1)}>Task 1</button>
-        {toggle1 ? <Table arr={data1} /> : null}
-        <button onClick={() => setToggle2(!toggle2)}>Task 2</button>
-        {toggle2 ? <Table arr={data2} /> : null}
-        <button onClick={() => setToggle3(!toggle3)}>Task 3</button>
-        {toggle3 ? <Table arr={data3} /> : null}
-        <button onClick={() => setToggle4(!toggle4)}>Task 4</button>
-        {toggle4 ? <Table arr={data4} /> : null}
-        <button onClick={() => setToggle5(!toggle5)}>Task 5</button>
-        {toggle5 ? <Table2 arr={data5} /> : null}
+      <div className="rootContainer">
+        <img className="logo" src={logo} alt="logo"/>
+        <div className="buttonContainer">
+          <Button data={data1} setData={setData} task={"Task 1"}/>
+          <Button data={data2} setData={setData} task={"Task 2"}/>
+          <Button data={data3} setData={setData} task={"Task 3"}/>
+          <Button data={data4} setData={setData} task={"Task 4"}/>
+          <Button data={data5} setData={setData} task={"Task 5"}/>
+        </div>
+        <div className="tables">
+          {data.length!=0 && data!=data5 && <Table arr={data} />}
+          {data.length!=0 && data==data5 && <Table2 arr={data} />}
+        </div>
       </div>
     </>
   );
